@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 06:06:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/06/29 14:00:21 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/06/29 14:44:36 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,15 @@ int	game_loop(t_vector *words)
 
 	write(1, "input : ", 8);
 	input = get_next_line(STDIN_FILENO);
-
+	while (is_input_valid(input) == 0
+			&& is_in_dictionary(words, input) == 0)
+	{
+		free(input);
+		printf("this input is not in the dictionary\n");
+		// write(1, "input : ", 8);
+		dprintf(1, RESET "input : ");
+		input = get_next_line(STDIN_FILENO);
+	}
 	while (ft_strcmp(input, *to_find) != 0)
 	{
 		check_letters(*to_find, input);
