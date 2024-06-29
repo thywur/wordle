@@ -1,0 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wordle.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/29 05:34:16 by lespenel          #+#    #+#             */
+/*   Updated: 2024/06/29 06:52:41 by lespenel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef WORDLE_H
+# define WORDLE_H
+
+# define BHYEL "\e[1;93m"
+# define BHGRN "\e[1;92m"
+# define RESET "\033[0m"
+# define WORDS_PATH "./words.txt"
+
+# include <vector.h>
+
+int	parse_words(t_vector *words);
+int	get_random_word(t_vector *words);
+int	game_loop(t_vector *words);
+
+#endif
