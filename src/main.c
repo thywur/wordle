@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 03:40:06 by lespenel          #+#    #+#             */
-/*   Updated: 2024/06/29 12:47:45 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/06/29 15:28:50 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,3 @@ int	main(void)
 	clear_str_vector(&words);
 	return (0);
 }
-
-/*
-void print_vec(t_vector *vector)
-{
-	size_t i;
-
-	i = 0;
-	char **s;
-	while (i < vector->len)
-	{
-		s = at_vector(vector, i);
-		printf("%s", *s);
-		++i;
-	}
-}*/
