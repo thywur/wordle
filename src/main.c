@@ -3,19 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lespenel <lespenel@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 03:40:06 by lespenel          #+#    #+#             */
-/*   Updated: 2024/06/29 06:53:26 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/06/29 12:47:45 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.h"
 #include "wordle.h"
 #include <unistd.h>
-
-int	print_yellow(char *str);
-int	print_green(char *str);
 
 int	main(void)
 {
@@ -35,7 +32,7 @@ int	main(void)
 void print_vec(t_vector *vector)
 {
 	size_t i;
-	
+
 	i = 0;
 	char **s;
 	while (i < vector->len)

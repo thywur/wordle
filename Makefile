@@ -1,6 +1,6 @@
 NAME = wordle
 
-CFLAGS = -Wall -Wextra -Werror -I$(INCLUDES) -I$(LIBFT_DIR)/$(INCLUDES)
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address -I$(INCLUDES) -I$(LIBFT_DIR)/$(INCLUDES)
 
 DFLAGS = -MMD -MP
 
