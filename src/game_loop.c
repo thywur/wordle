@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 06:06:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/06/29 13:21:07 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/06/29 14:00:21 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	game_loop(t_vector *words)
 	int		guesses = 0;
 
 	to_find = at_vector(words, get_random_word(words));
+	// printf("to find: %s\n", *to_find); 				//a virer
 
 	write(1, "input : ", 8);
 	input = get_next_line(STDIN_FILENO);
@@ -108,39 +109,21 @@ static int	times_letter_is_in_word(char *word, char letter)
 	return (count);
 }
 
-static int	times_letter_was_checked(char *word, char letter, size_t pos)
-{
-	size_t	i;
-	int		count;
+// static int	times_letter_was_checked(char *word, char letter, size_t pos)
+// {
+// 	size_t	i;
+// 	int		count;
 
-	i = 0;
-	count = 0;
-	while (i < pos)
-	{
-		if (word[i] == letter)
-			count++;
-		i++;
-	}
-	return (count);
-}
-
-static int	letter_is_in_word(char *to_find, char *input, char letter, size_t pos)
-{
-	size_t	i = 0;
-	int		count_to_find = times_letter_is_in_word(to_find, letter);
-	int		count_input = times_letter_was_checked(input, letter, pos);
-
-	if (count_to_find <= count_input)
-		return (0);
-
-	while (to_find[i])
-	{
-		if (to_find[i] == letter)
-			return (1);
-		i++;
-	}
-	return (0);
-}
+// 	i = 0;
+// 	count = 0;
+// 	while (i < pos)
+// 	{
+// 		if (word[i] == letter)
+// 			count++;
+// 		i++;
+// 	}
+// 	return (count);
+// }
 
 static int	correct_position(char *to_find, char *input, char letter, int pos)
 {
@@ -148,6 +131,33 @@ static int	correct_position(char *to_find, char *input, char letter, int pos)
 		return (1);
 	return (0);
 }
+
+static int	letter_is_in_word(char *to_find, char *input, char letter, size_t pos)
+{
+	size_t	i = 0;
+	int		count_to_find = times_letter_is_in_word(to_find, letter);
+	int		count_input = times_letter_is_in_word(input, letter);
+	// int		count_checked = times_letter_was_checked(input, letter, pos);
+
+	while (to_find[i])
+	{
+		if (to_find[i] == letter)
+		{
+			if (count_input > count_to_find)
+			{
+				if (correct_position(to_find, input, letter, pos))
+					return (1);
+				else
+					return (0);
+			}
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
+
 
 static void	check_letters(char *to_find, char *input)
 {
