@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 06:06:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/06/29 15:22:13 by alermolo         ###   ########.fr       */
+/*   Updated: 2024/06/29 17:17:15 by alermolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	game_loop(t_vector *words)
 	int		guesses = 0;
 
 	to_find = at_vector(words, get_random_word(words));
+	printf("to find: %s", *to_find);
 
 	write(1, "input : ", 8);
 	input = get_next_line(STDIN_FILENO);
@@ -55,8 +56,11 @@ int	game_loop(t_vector *words)
 			input = get_next_line(STDIN_FILENO);
 		}
 		guesses++;
-		if (guesses == 6)
-			dprintf(1, RESET "You lost! The word was %s\n", *to_find);
+		if (guesses == 5 && ft_strcmp(input, *to_find) != 0)
+		{
+			dprintf(1, RESET "You lost! The word was %s", *to_find);
+			break;
+		}
 	}
 	if (ft_strcmp(input, *to_find) == 0)
 		dprintf(1, RESET "You won!\n");
