@@ -3,3 +3,4 @@ SRC_FILES = main.c \
 			game_loop.c \
 			print_letters.c \
 			get_random_word.c \
+			get_input.c \
