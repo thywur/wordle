@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 06:06:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/06/30 07:20:53 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/06/30 11:59:29 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	game_loop(t_vector *words)
 	input = get_input(words, &guesses);
 	if (input == NULL)
 		return (-1);
-	while (ft_strcmp(input, *to_find) != 0)
+	while (ft_strncmp(input, *to_find, 5) != 0)
 	{
 		check_letters(*to_find, input);
 		free(input);
@@ -38,11 +38,12 @@ int	game_loop(t_vector *words)
 			return (-1);
 		if (guesses == 0 && ft_strcmp(input, *to_find) != 0)
 		{
+			check_letters(*to_find, input);
 			printf(RESET"You lost! The word was "BHGRN"%s"RESET, *to_find);
 			break;
 		}
 	}
-	if (ft_strcmp(input, *to_find) == 0)
+	if (ft_strncmp(input, *to_find, 5) == 0)
 		dprintf(1, BHGRN "%s" RESET "You won!\n", *to_find);
 	free(input);
 	return (0);
@@ -64,49 +65,63 @@ static int	times_letter_is_in_word(char *word, char letter)
 	return (count);
 }
 
-static int	correct_position(char *to_find, char *input, char letter, int pos)
+static void get_correct_letter(char *to_find, char *input, int *color, int *ascii)
 {
-	if (to_find[pos] == letter && input[pos] == letter)
-		return (1);
-	return (0);
-}
-
-static int	letter_is_in_word(char *to_find, char *input, char letter, size_t pos)
-{
-	size_t		i;
-	const int	count_to_find = times_letter_is_in_word(to_find, letter);
-	const int	count_input = times_letter_is_in_word(input, letter);
+	size_t	i;
 
 	i = 0;
 	while (to_find[i])
 	{
-		if (to_find[i] == letter)
+		if (to_find[i] == input[i])
 		{
-			if (count_input > count_to_find)
-				return (correct_position(to_find, input, letter, pos));
-			return (1);
+			ascii[(int)to_find[i]] += 1;
+			color[i] = GREEN;
+		}
+		++i;
+	}
+}
+
+static void	get_yellow_letter(char *to_find, int *color, char letter, int *ascii, int pos)
+{
+	size_t		i;
+	const int	count_to_find = times_letter_is_in_word(to_find, letter);
+
+	i = 0;
+	while (to_find[i])
+	{
+		if (to_find[i] == letter && color[i] != GREEN)
+		{
+			ascii[(int)to_find[i]] += 1;
+			if (ascii[(int)to_find[i]] <= count_to_find)
+				color[pos] = YELLOW;
 		}
 		i++;
 	}
-	return (0);
 }
 
 static void	check_letters(char *to_find, char *input)
 {
 	size_t	i;
+	int		ascii[256] = {(GREY)};
+	int		color[5] = {(GREY)};
 
+	i = 0;
+	get_correct_letter(to_find, input, color, ascii);
+	while (input[i])
+	{
+		if (color[i] != GREEN)
+			get_yellow_letter(to_find, color, input[i], ascii, i);
+		i++;
+	}
 	i = 0;
 	while (input[i])
 	{
-		if (letter_is_in_word(to_find, input, input[i], i))
-		{
-			if (correct_position(to_find, input, input[i], i))
-				print_green(input[i]);
-			else
-				print_yellow(input[i]);
-		}
-		else
+		if (color[i] == GREY)
 			print_gray(input[i]);
-		i++;
+		if (color[i] == GREEN)
+			print_green(input[i]);
+		if (color[i] == YELLOW)
+			print_yellow(input[i]);
+		++i;
 	}
 }
