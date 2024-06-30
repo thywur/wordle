@@ -6,7 +6,7 @@
 /*   By: alermolo <alermolo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 06:06:31 by lespenel          #+#    #+#             */
-/*   Updated: 2024/06/30 06:25:45 by lespenel         ###   ########.fr       */
+/*   Updated: 2024/06/30 07:20:53 by lespenel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ int	game_loop(t_vector *words)
 			return (-1);
 		if (guesses == 0 && ft_strcmp(input, *to_find) != 0)
 		{
-			dprintf(1, RESET "You lost! The word was %s", *to_find);
+			printf(RESET"You lost! The word was "BHGRN"%s"RESET, *to_find);
 			break;
 		}
 	}
 	if (ft_strcmp(input, *to_find) == 0)
-		dprintf(1, RESET "You won!\n");
+		dprintf(1, BHGRN "%s" RESET "You won!\n", *to_find);
 	free(input);
 	return (0);
 }
